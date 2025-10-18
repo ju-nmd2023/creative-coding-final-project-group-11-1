@@ -26,7 +26,7 @@ function setup() {
       y: random(height),
       hue: random(360),
       angleOffset: random(TWO_PI),
-      thickness: random(0.5, 4.5)
+      thickness: random(0.5, 4.5),
     });
   }
 
@@ -44,10 +44,12 @@ function draw() {
 
   const now = millis();
   let dropletThisFrame = false;
-  const sampleLines = lines.slice(0, 50); 
+  const sampleLines = lines.slice(0, 50);
 
   for (let l of lines) {
-    let angle = noise(l.x * 0.005, l.y * 0.005, frameCount * 0.002) * TWO_PI * 4 + l.angleOffset;
+    let angle =
+      noise(l.x * 0.005, l.y * 0.005, frameCount * 0.002) * TWO_PI * 4 +
+      l.angleOffset;
     let speed = 5;
     let dx = cos(angle) * speed;
     let dy = sin(angle) * speed;
@@ -66,7 +68,12 @@ function draw() {
       }
     }
 
-    if (collided && soundStarted && !dropletThisFrame && now - lastDropletTime > 80) {
+    if (
+      collided &&
+      soundStarted &&
+      !dropletThisFrame &&
+      now - lastDropletTime > 80
+    ) {
       triggerDroplet();
       dropletThisFrame = true;
       lastDropletTime = now;
@@ -100,7 +107,7 @@ function setupSound() {
   pluck = new Tone.PluckSynth({
     attackNoise: 1,
     dampening: 2000,
-    resonance: 0.98
+    resonance: 0.98,
   }).connect(reverb);
 
   Tone.Transport.start();
@@ -114,7 +121,7 @@ function triggerDroplet() {
 }
 
 function keyPressed() {
-  if (key === ' ' && !soundStarted) {
+  if (key === " " && !soundStarted) {
     Tone.start();
     soundStarted = true;
     console.log("Audio context started");
